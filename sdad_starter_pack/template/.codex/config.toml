@@ -1,0 +1,30 @@
+# Project-scoped Codex config (loaded only after you "trust" the project)
+# Docs: https://developers.openai.com/codex/cli/config#config-reference
+
+# SDAD defaults: максимально автономно внутри workspace, но без опасной эскалации “по умолчанию”.
+sandbox_mode = "workspace-write"
+approval_policy = "on-failure"
+web_search = "cached"
+
+# Network access внутри sandbox по умолчанию выключен в локальном CLI.
+# Включай только при необходимости (например, установка зависимостей) и на ограниченное время.
+[sandbox_workspace_write]
+network_access = false
+
+[profiles.full_auto]
+# Эквивалент CLI-флага `--full-auto` (низкий фрикшен, но может спрашивать разрешения).
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+web_search = "cached"
+
+[profiles.quiet]
+# Полностью без prompts (если нужна эскалация — просто не сможет продолжить).
+sandbox_mode = "workspace-write"
+approval_policy = "never"
+web_search = "cached"
+
+[profiles.readonly_review]
+# Для чтения/аудита (без правок).
+sandbox_mode = "read-only"
+approval_policy = "never"
+web_search = "disabled"
